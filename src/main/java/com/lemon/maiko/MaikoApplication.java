@@ -2,6 +2,7 @@ package com.lemon.maiko;
 
 import com.lemon.maiko.core.services.impl.ApiRateLimitServiceImpl;
 import com.lemon.maiko.core.services.impl.MessageServiceImpl;
+import com.lemon.maiko.core.services.impl.UserAccessLogServiceImpl;
 import com.lemon.maiko.filter.RequestsRateLimiterFilter;
 import com.lemon.maiko.health.HealthCheckImpl;
 import com.lemon.maiko.resources.MessageResource;
@@ -41,7 +42,7 @@ public class MaikoApplication extends Application<MaikoConfiguration> {
         environment.jersey().register(new MessageResource(new MessageServiceImpl()));
         environment.healthChecks().register("template", new HealthCheckImpl());
 
-        environment.servlets().addFilter("RequestsRateLimiterFilter", new RequestsRateLimiterFilter(new ApiRateLimitServiceImpl()))
+        environment.servlets().addFilter("RequestsRateLimiterFilter", new RequestsRateLimiterFilter(new ApiRateLimitServiceImpl(new UserAccessLogServiceImpl())))
                 .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
     }
 
