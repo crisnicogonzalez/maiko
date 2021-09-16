@@ -1,0 +1,4 @@
+com/lemon/maiko/core/services/MessageService.class
+com/lemon/maiko/client/FoassClient.class
+com/lemon/maiko/core/services/impl/MessageServiceImpl.class
+com/lemon/maiko/health/HealthCheckImpl.class

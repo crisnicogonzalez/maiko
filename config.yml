@@ -1,0 +1,9 @@
+logging:
+  level: INFO
+  loggers:
+    lemon: DEBUG
+
+foass:
+  host: ${FOASS_HOST:-}
+server:
+  rootPath: /api/
