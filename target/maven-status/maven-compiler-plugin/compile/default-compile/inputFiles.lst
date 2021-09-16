@@ -1,9 +1,0 @@
-/home/cgonzalez/Documents/lemon/maiko/src/main/java/com/lemon/maiko/api/in/Message.java
-/home/cgonzalez/Documents/lemon/maiko/src/main/java/com/lemon/maiko/api/out/Operation.java
-/home/cgonzalez/Documents/lemon/maiko/src/main/java/com/lemon/maiko/health/HealthCheckImpl.java
-/home/cgonzalez/Documents/lemon/maiko/src/main/java/com/lemon/maiko/MaikoApplication.java
-/home/cgonzalez/Documents/lemon/maiko/src/main/java/com/lemon/maiko/core/services/MessageService.java
-/home/cgonzalez/Documents/lemon/maiko/src/main/java/com/lemon/maiko/client/FoassClient.java
-/home/cgonzalez/Documents/lemon/maiko/src/main/java/com/lemon/maiko/MaikoConfiguration.java
-/home/cgonzalez/Documents/lemon/maiko/src/main/java/com/lemon/maiko/core/services/impl/MessageServiceImpl.java
-/home/cgonzalez/Documents/lemon/maiko/src/main/java/com/lemon/maiko/resources/MessageResource.java
