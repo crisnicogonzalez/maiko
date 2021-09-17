@@ -16,7 +16,7 @@ import java.time.OffsetDateTime;
 public class AccessLog {
 
     private OffsetDateTime firstAccess;
-    private int quantity;
+    private Integer quantity;
 
 
     public void plusQuantityToOne() {

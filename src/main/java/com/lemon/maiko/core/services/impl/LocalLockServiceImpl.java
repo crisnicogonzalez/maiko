@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class LockServiceImpl implements LockService {
+public class LocalLockServiceImpl implements LockService {
 
     private final Map<String, Lock> lockByUserApiId;
 
-    public LockServiceImpl() {
+    public LocalLockServiceImpl() {
         lockByUserApiId = new MapMaker()
                 .concurrencyLevel(10)
                 .weakKeys()
