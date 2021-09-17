@@ -1,18 +1,15 @@
 package com.lemon.maiko.resources;
 
 import com.codahale.metrics.annotation.Timed;
-import com.lemon.maiko.api.res.Message;
 import com.lemon.maiko.core.services.MessageService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import java.util.Optional;
 
 @Path("/message")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(MediaType.TEXT_HTML)
 public class MessageResource {
 
 
@@ -24,7 +21,7 @@ public class MessageResource {
 
     @GET
     @Timed
-    public Message getMessage(@QueryParam("name") Optional<String> name) {
-        return this.messageService.getMessage();
+    public String getMessage() {
+        return this.messageService.getMessage("algo");
     }
 }

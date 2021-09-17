@@ -1,29 +1,19 @@
 package com.lemon.maiko.api.res;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import java.time.OffsetDateTime;
+
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Builder
 public class Message {
     private String message;
-    private Integer tries;
-
-    public Message() {
-    }
-
-    public Message(String message, Integer tries) {
-        this.message = message;
-        this.tries = tries;
-    }
-
-
-    @JsonProperty
-    public Integer getTries() {
-        return tries;
-    }
-
-    @JsonProperty
-    public String getMessage() {
-        return message;
-    }
-
+    private OffsetDateTime tries;
 
 }

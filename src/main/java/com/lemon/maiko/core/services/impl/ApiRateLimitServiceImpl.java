@@ -27,6 +27,7 @@ public class ApiRateLimitServiceImpl implements ApiRateLimitService {
 
     @Override
     public boolean userHaveReachedRateLimit(String userApiId) {
+        LOGGER.info("Check if user {} have reached limit", userApiId);
         final AccessLog log = this.accessLogService.getUserAccessLog(userApiId);
         if (this.isFirstTimeOrWindowTimeShouldBeReset(log)) {
             LOGGER.info("First access for user {}", userApiId);

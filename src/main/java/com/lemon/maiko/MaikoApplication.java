@@ -1,6 +1,7 @@
 package com.lemon.maiko;
 
 import com.lemon.maiko.client.impl.FoaasClientImpl;
+import com.lemon.maiko.client.impl.JerseyRestClientImpl;
 import com.lemon.maiko.core.services.impl.ApiRateLimitServiceImpl;
 import com.lemon.maiko.core.services.impl.LockServiceImpl;
 import com.lemon.maiko.core.services.impl.MessageServiceImpl;
@@ -41,7 +42,7 @@ public class MaikoApplication extends Application<MaikoConfiguration> {
     public void run(final MaikoConfiguration configuration,
                     final Environment environment) {
         // TODO: implement application
-        environment.jersey().register(new MessageResource(new MessageServiceImpl(new FoaasClientImpl("some host"))));
+        environment.jersey().register(new MessageResource(new MessageServiceImpl(new FoaasClientImpl("some host", new JerseyRestClientImpl("http://foaas.com")))));
         environment.healthChecks().register("template", new HealthCheckImpl());
 
         environment.servlets().addFilter("RequestsRateLimiterFilter", new RequestsRateLimiterFilter(new ApiRateLimitServiceImpl(new UserAccessLogServiceImpl(), new LockServiceImpl())))

@@ -6,6 +6,8 @@ import com.lemon.maiko.core.services.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.OffsetDateTime;
+
 public class MessageServiceImpl implements MessageService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageServiceImpl.class);
@@ -17,8 +19,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Message getMessage() {
+    public String getMessage(String userApiId) {
         LOGGER.info("Get message");
-        return new Message("dsa", 1);
+        return this.foaasClient.getMessage(userApiId);
     }
 }
