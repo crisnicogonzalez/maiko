@@ -3,15 +3,16 @@ package com.lemon.maiko.core.services.impl;
 import com.lemon.maiko.core.model.AccessLog;
 import com.lemon.maiko.core.services.UserAccessLogService;
 
-import java.util.HashMap;
+import java.time.OffsetDateTime;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class UserAccessLogServiceImpl implements UserAccessLogService {
 
     private final Map<String, AccessLog> accessLogsByUserId;
 
     public UserAccessLogServiceImpl() {
-        this.accessLogsByUserId = new HashMap<>();
+        this.accessLogsByUserId = new ConcurrentHashMap<>();
     }
 
     @Override
@@ -20,18 +21,12 @@ public class UserAccessLogServiceImpl implements UserAccessLogService {
     }
 
     @Override
-    public void createAccessLog(String userApiId) {
-        this.accessLogsByUserId.put(userApiId, new AccessLog());
+    public void createAccessLogAndIncrementOne(String userApiId) {
+        this.accessLogsByUserId.put(userApiId, AccessLog.builder().firstAccess(OffsetDateTime.now()).quantity(1).build());
     }
 
     @Override
-    public void addNewAccess(String userApiId) {
-        this.accessLogsByUserId.get(userApiId).plusQuantityToOne();
-    }
-
-    @Override
-    public void resetLogsAndAddNewAccess(String userApiId) {
-        this.accessLogsByUserId.put(userApiId, new AccessLog());
+    public void incrementCounterToOne(String userApiId) {
         this.accessLogsByUserId.get(userApiId).plusQuantityToOne();
     }
 }

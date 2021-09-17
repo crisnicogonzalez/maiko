@@ -6,9 +6,7 @@ public interface UserAccessLogService {
 
     AccessLog getUserAccessLog(String userApiId);
 
-    void createAccessLog(String userApiId);
+    void createAccessLogAndIncrementOne(String userApiId);
 
-    void addNewAccess(String userApiId);
-
-    void resetLogsAndAddNewAccess(String userApiId);
+    void incrementCounterToOne(String userApiId);
 }

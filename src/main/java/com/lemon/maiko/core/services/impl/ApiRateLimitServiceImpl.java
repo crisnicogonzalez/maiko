@@ -27,33 +27,29 @@ public class ApiRateLimitServiceImpl implements ApiRateLimitService {
 
     @Override
     public boolean userHaveReachedRateLimit(String userApiId) {
-        this.lockService.lock(userApiId);
-        try {
-            final AccessLog log = this.accessLogService.getUserAccessLog(userApiId);
-            if (log == null) {
-                LOGGER.info("First access for user {}", userApiId);
-                this.accessLogService.createAccessLog(userApiId);
-                this.accessLogService.addNewAccess(userApiId);
+        final AccessLog log = this.accessLogService.getUserAccessLog(userApiId);
+        if (this.isFirstTimeOrWindowTimeShouldBeReset(log)) {
+            LOGGER.info("First access for user {}", userApiId);
+            this.accessLogService.createAccessLogAndIncrementOne(userApiId);
+            return false;
+        } else {
+            int quantity = log.getQuantity();
+            LOGGER.info("Current quantity {}", quantity);
+            if (quantity < QUANTITY_REQUEST_LIMIT) {
+                this.accessLogService.incrementCounterToOne(userApiId);
                 return false;
             }
-            final OffsetDateTime oldestLimit = OffsetDateTime.now().minusSeconds(TIME_LIMIT_IN_SECONDS);
-            final OffsetDateTime firstAccess = log.getFirstAccess();
-            if (firstAccess.isBefore(oldestLimit)) {
-                LOGGER.info("Reset counter for user {}", userApiId);
-                this.accessLogService.resetLogsAndAddNewAccess(userApiId);
-                return false;
-            } else {
-                int quantity = log.getQuantity();
-                LOGGER.info("Current quantity {}", quantity);
-                if (quantity < QUANTITY_REQUEST_LIMIT) {
-                    log.plusQuantityToOne();
-                    return false;
-                }
-                return true;
-            }
-        } finally {
-            this.lockService.unlock(userApiId);
+            return true;
         }
+    }
 
+
+    private boolean isFirstTimeOrWindowTimeShouldBeReset(AccessLog log) {
+        if (log == null) {
+            return true;
+        }
+        final OffsetDateTime oldestLimit = OffsetDateTime.now().minusSeconds(TIME_LIMIT_IN_SECONDS);
+        final OffsetDateTime firstAccess = log.getFirstAccess();
+        return firstAccess.isBefore(oldestLimit);
     }
 }
