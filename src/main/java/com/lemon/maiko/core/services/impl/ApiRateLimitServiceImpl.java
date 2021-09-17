@@ -2,7 +2,6 @@ package com.lemon.maiko.core.services.impl;
 
 import com.lemon.maiko.core.model.AccessLog;
 import com.lemon.maiko.core.services.ApiRateLimitService;
-import com.lemon.maiko.core.services.LockService;
 import com.lemon.maiko.core.services.UserAccessLogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,17 +11,17 @@ import java.time.OffsetDateTime;
 public class ApiRateLimitServiceImpl implements ApiRateLimitService {
 
     private final UserAccessLogService accessLogService;
-    private final LockService lockService;
 
     private static final Integer TIME_LIMIT_IN_SECONDS = 10;
     private static final Integer QUANTITY_REQUEST_LIMIT = 5;
+    private final Integer quantityRequestLimit;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiRateLimitServiceImpl.class);
 
 
-    public ApiRateLimitServiceImpl(UserAccessLogService accessLogService, LockService lockService) {
+    public ApiRateLimitServiceImpl(UserAccessLogService accessLogService, Integer quantityRequestLimit) {
         this.accessLogService = accessLogService;
-        this.lockService = lockService;
+        this.quantityRequestLimit = quantityRequestLimit;
     }
 
     @Override
@@ -36,7 +35,7 @@ public class ApiRateLimitServiceImpl implements ApiRateLimitService {
         } else {
             int quantity = log.getQuantity();
             LOGGER.info("Current quantity {}", quantity);
-            if (quantity < QUANTITY_REQUEST_LIMIT) {
+            if (quantity < this.quantityRequestLimit) {
                 this.accessLogService.incrementCounterToOne(userApiId);
                 return false;
             }
