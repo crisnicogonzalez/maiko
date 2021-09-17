@@ -22,13 +22,13 @@ public class UserAccessLogConcurrenceMapServiceImpl implements UserAccessLogServ
 
     @Override
     public void createAccessLogWithInitialValue(String userApiId, Integer initialValue) {
-        this.accessLogsByUserId.compute(userApiId, (k, v) -> v == null ? AccessLog.builder().firstAccess(OffsetDateTime.now()).quantity(1).build() : AccessLog.builder().firstAccess(v.getFirstAccess()).quantity(v.getQuantity() + 1).build());
+        this.accessLogsByUserId.compute(userApiId, (k, v) -> v == null ? AccessLog.builder().firstAccess(OffsetDateTime.now()).currentQuantity(1).build() : AccessLog.builder().firstAccess(v.getFirstAccess()).currentQuantity(v.getCurrentQuantity() + 1).build());
     }
 
     @Override
     public void incrementCounterToOne(String userApiId) {
         this.accessLogsByUserId.computeIfPresent(userApiId, ((s, c) -> {
-            return AccessLog.builder().firstAccess(c.getFirstAccess()).quantity(c.getQuantity() + 1).build();
+            return AccessLog.builder().firstAccess(c.getFirstAccess()).currentQuantity(c.getCurrentQuantity() + 1).build();
         }));
     }
 }

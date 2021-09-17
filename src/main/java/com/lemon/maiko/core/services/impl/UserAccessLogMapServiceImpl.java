@@ -23,7 +23,7 @@ public class UserAccessLogMapServiceImpl implements UserAccessLogService {
 
     @Override
     public void createAccessLogWithInitialValue(String userApiId, Integer quantity) {
-        this.accessLogsByUserId.put(userApiId, AccessLog.builder().firstAccess(now()).quantity(quantity).build());
+        this.accessLogsByUserId.put(userApiId, AccessLog.builder().firstAccess(now()).currentQuantity(quantity).build());
     }
 
     @Override

@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 public class ApiRateLimitServiceConcurrentMapImplTest {
 
     private ApiRateLimitService apiRateLimitService;
-    private static  final int QUANTITY_REQUEST_LIMIT = 5;
+    private static final int QUANTITY_REQUEST_LIMIT = 5;
 
 
     @Before
@@ -25,7 +25,7 @@ public class ApiRateLimitServiceConcurrentMapImplTest {
     }
 
     @Test
-    public void testOnlyNRequests() throws InterruptedException {
+    public void testOnlyFiveRequestWereExecutedSuccessfully() throws InterruptedException {
         int numberOfThreads = 10;
         ExecutorService service = Executors.newFixedThreadPool(numberOfThreads);
         CountDownLatch latch = new CountDownLatch(numberOfThreads);
@@ -42,9 +42,8 @@ public class ApiRateLimitServiceConcurrentMapImplTest {
 
         List<Boolean> booleans = Arrays.asList(digits);
 
-        long successCases = booleans.stream().filter(p -> p).count();
+        long successCases = booleans.stream().filter(p -> !p).count();
 
         assertEquals(successCases, QUANTITY_REQUEST_LIMIT);
-
     }
 }

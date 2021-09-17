@@ -17,10 +17,10 @@ import java.time.OffsetDateTime;
 public class AccessLog implements Serializable {
 
     private OffsetDateTime firstAccess;
-    private Integer quantity;
+    private Integer currentQuantity;
 
 
     public void plusQuantityToOne() {
-        quantity = quantity + 1;
+        currentQuantity = currentQuantity + 1;
     }
 }

@@ -22,11 +22,11 @@ public class UserAccessLogRedisServiceImpl implements UserAccessLogService {
 
     @Override
     public void createAccessLogWithInitialValue(String userApiId, Integer quantity) {
-        this.accessLogsByUserId.fastPut(userApiId, AccessLog.builder().firstAccess(now()).quantity(quantity).build());
+        this.accessLogsByUserId.fastPut(userApiId, AccessLog.builder().firstAccess(now()).currentQuantity(quantity).build());
     }
 
     @Override
     public void incrementCounterToOne(String userApiId) {
-        this.accessLogsByUserId.computeIfPresent(userApiId, (k, v) -> AccessLog.builder().firstAccess(v.getFirstAccess()).quantity(v.getQuantity() + 1).build());
+        this.accessLogsByUserId.computeIfPresent(userApiId, (k, v) -> AccessLog.builder().firstAccess(v.getFirstAccess()).currentQuantity(v.getCurrentQuantity() + 1).build());
     }
 }

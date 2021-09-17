@@ -37,7 +37,7 @@ public class ApiRateLimitServiceImpl implements ApiRateLimitService {
                 this.accessLogService.createAccessLogWithInitialValue(userApiId, TIMES_INITIAL_VALUE);
                 return false;
             } else {
-                int quantity = log.getQuantity();
+                int quantity = log.getCurrentQuantity();
                 LOGGER.info("Current quantity {}", quantity);
                 if (quantity < this.quantityRequestLimit) {
                     this.accessLogService.incrementCounterToOne(userApiId);
@@ -49,6 +49,11 @@ public class ApiRateLimitServiceImpl implements ApiRateLimitService {
             this.lockService.unlock(userApiId);
         }
 
+    }
+
+    @Override
+    public Integer getRequestQuantity(String userApiId) {
+        return this.accessLogService.getUserAccessLog(userApiId).getCurrentQuantity();
     }
 
 
