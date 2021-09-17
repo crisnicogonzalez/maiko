@@ -5,6 +5,7 @@ import com.lemon.maiko.core.services.LockService;
 
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class LockServiceImpl implements LockService {
 
@@ -12,14 +13,14 @@ public class LockServiceImpl implements LockService {
 
     public LockServiceImpl() {
         lockByUserApiId = new MapMaker()
-                .concurrencyLevel(4)
+                .concurrencyLevel(10)
                 .weakKeys()
                 .makeMap();
     }
 
     @Override
     public void lock(String userApiId) {
-        lockByUserApiId.get(userApiId).lock();
+        lockByUserApiId.computeIfAbsent(userApiId, key -> new ReentrantLock()).lock();
     }
 
     @Override
