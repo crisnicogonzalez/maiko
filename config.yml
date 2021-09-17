@@ -1,4 +1,8 @@
 logging:
+  appenders:
+    - type: console
+      threshold: ALL
+      logFormat: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5level] [%c{0}] [%thread] [%msg] %n"
   level: INFO
   loggers:
     lemon: DEBUG
