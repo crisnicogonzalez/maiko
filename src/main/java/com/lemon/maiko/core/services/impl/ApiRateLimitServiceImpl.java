@@ -33,7 +33,7 @@ public class ApiRateLimitServiceImpl implements ApiRateLimitService {
         try {
             final AccessLog log = this.accessLogService.getUserAccessLog(userApiId);
             if (this.isFirstTimeOrWindowTimeShouldBeReset(log)) {
-                LOGGER.info("First access for user {}", userApiId);
+                LOGGER.info("Create new log {}", userApiId);
                 this.accessLogService.createAccessLogWithInitialValue(userApiId, TIMES_INITIAL_VALUE);
                 return false;
             } else {
@@ -58,6 +58,7 @@ public class ApiRateLimitServiceImpl implements ApiRateLimitService {
         }
         final OffsetDateTime oldestLimit = OffsetDateTime.now().minusSeconds(TIME_LIMIT_IN_SECONDS);
         final OffsetDateTime firstAccess = log.getFirstAccess();
+        LOGGER.info("First access {} oldestLimit {}", firstAccess, oldestLimit);
         return firstAccess.isBefore(oldestLimit);
     }
 }
