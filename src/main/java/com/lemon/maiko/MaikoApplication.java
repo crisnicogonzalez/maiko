@@ -42,7 +42,7 @@ public class MaikoApplication extends Application<MaikoConfiguration> {
         environment.jersey().register(new MessageResource(new MessageServiceImpl(new FoaasClientImpl("some host", new JerseyRestClientImpl("http://foaas.com")))));
         environment.healthChecks().register("template", new HealthCheckImpl());
 
-        environment.servlets().addFilter("RequestsRateLimiterFilter", new RequestsRateLimiterFilter(new ApiRateLimitServiceImpl(new UserAccessLogConcurrenceMapServiceImpl(), 5, new RedisLockServiceImpl())))
+        environment.servlets().addFilter("RequestsRateLimiterFilter", new RequestsRateLimiterFilter(new ApiRateLimitServiceImpl(new UserAccessLogRedisServiceImpl(), 5, new RedisLockServiceImpl())))
                 .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
     }
 

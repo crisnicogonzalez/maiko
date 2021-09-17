@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 
 
@@ -13,7 +14,7 @@ import java.time.OffsetDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccessLog {
+public class AccessLog implements Serializable {
 
     private OffsetDateTime firstAccess;
     private Integer quantity;
