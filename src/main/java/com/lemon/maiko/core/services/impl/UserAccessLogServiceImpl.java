@@ -32,5 +32,6 @@ public class UserAccessLogServiceImpl implements UserAccessLogService {
     @Override
     public void resetLogsAndAddNewAccess(String userApiId) {
         this.accessLogsByUserId.put(userApiId, new AccessLog());
+        this.accessLogsByUserId.get(userApiId).plusQuantityToOne();
     }
 }

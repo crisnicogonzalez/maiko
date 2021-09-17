@@ -36,7 +36,6 @@ public class ApiRateLimitServiceImpl implements ApiRateLimitService {
         if (firstAccess.isBefore(oldestLimit)) {
             LOGGER.info("Reset counter for user {}", userApiId);
             this.accessLogService.resetLogsAndAddNewAccess(userApiId);
-            this.accessLogService.addNewAccess(userApiId);
             return false;
         } else {
             int quantity = log.getQuantity();
