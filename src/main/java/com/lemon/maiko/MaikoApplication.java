@@ -2,6 +2,7 @@ package com.lemon.maiko;
 
 import com.lemon.maiko.client.impl.FoaasClientImpl;
 import com.lemon.maiko.core.services.impl.ApiRateLimitServiceImpl;
+import com.lemon.maiko.core.services.impl.LockServiceImpl;
 import com.lemon.maiko.core.services.impl.MessageServiceImpl;
 import com.lemon.maiko.core.services.impl.UserAccessLogServiceImpl;
 import com.lemon.maiko.filter.RequestsRateLimiterFilter;
@@ -43,7 +44,7 @@ public class MaikoApplication extends Application<MaikoConfiguration> {
         environment.jersey().register(new MessageResource(new MessageServiceImpl(new FoaasClientImpl("some host"))));
         environment.healthChecks().register("template", new HealthCheckImpl());
 
-        environment.servlets().addFilter("RequestsRateLimiterFilter", new RequestsRateLimiterFilter(new ApiRateLimitServiceImpl(new UserAccessLogServiceImpl())))
+        environment.servlets().addFilter("RequestsRateLimiterFilter", new RequestsRateLimiterFilter(new ApiRateLimitServiceImpl(new UserAccessLogServiceImpl(), new LockServiceImpl())))
                 .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
     }
 
