@@ -1,7 +1,10 @@
 package com.lemon.maiko.filter;
 
 import com.lemon.maiko.core.services.ApiRateLimitService;
+import com.lemon.maiko.core.services.impl.ApiRateLimitServiceImpl;
 import org.eclipse.jetty.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -15,6 +18,8 @@ public class RequestsRateLimiterFilter implements javax.servlet.Filter {
 
     private static final String USER_API_ID_HEADER = "User-Api-Id";
     private final ApiRateLimitService apiRateLimitService;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequestsRateLimiterFilter.class);
 
     public RequestsRateLimiterFilter(ApiRateLimitService apiRateLimitService) {
         this.apiRateLimitService = apiRateLimitService;
@@ -31,11 +36,13 @@ public class RequestsRateLimiterFilter implements javax.servlet.Filter {
             }
 
             if (this.apiRateLimitService.userHaveReachedRateLimit(userApiId)) {
+                LOGGER.error("User {} have reached request limit",userApiId);
                 HttpServletResponse httpResponse = (HttpServletResponse) response;
                 httpResponse.setStatus(HttpStatus.TOO_MANY_REQUESTS_429);
                 httpResponse.getWriter().print("Too many requests");
+            } else {
+                chain.doFilter(request, response); // This signals that the request should pass this filter
             }
-            chain.doFilter(request, response); // This signals that the request should pass this filter
         }
     }
 

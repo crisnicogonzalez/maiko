@@ -9,4 +9,6 @@ public interface UserAccessLogService {
     void createAccessLog(String userApiId);
 
     void addNewAccess(String userApiId);
+
+    void resetLogsAndAddNewAccess(String userApiId);
 }

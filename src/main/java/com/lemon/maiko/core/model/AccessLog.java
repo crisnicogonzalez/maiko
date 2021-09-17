@@ -1,23 +1,24 @@
 package com.lemon.maiko.core.model;
 
 
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
-import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
 
-@NoArgsConstructor
+
 @Getter
-@Builder
 public class AccessLog {
 
-    private Queue<OffsetDateTime> access;
+    private final OffsetDateTime firstAccess;
+    private int quantity;
 
-    public AccessLog(int size) {
-        this.access = new ArrayBlockingQueue<>(size);
-        this.access.add(OffsetDateTime.now());
+
+    public AccessLog() {
+        firstAccess = OffsetDateTime.now();
+        quantity = 0;
+    }
+
+    public void plusQuantityToOne() {
+        quantity = quantity + 1;
     }
 }
