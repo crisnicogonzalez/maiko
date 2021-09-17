@@ -2,9 +2,7 @@ package com.lemon.maiko.core.services.impl;
 
 import com.google.common.collect.MapMaker;
 import com.lemon.maiko.core.services.LockService;
-import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
-import org.redisson.config.Config;
 
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
@@ -14,15 +12,13 @@ public class RedisLockServiceImpl implements LockService {
     private final Map<String, Lock> lockByUserApiId;
     private final RedissonClient redisson;
 
-    public RedisLockServiceImpl() {
+    public RedisLockServiceImpl(RedissonClient redisson) {
         lockByUserApiId = new MapMaker()
                 .concurrencyLevel(10)
                 .weakKeys()
                 .makeMap();
 
-        Config config = new Config();
-        config.useSingleServer().setAddress("redis://127.0.0.1:6379");
-        redisson = Redisson.create(config);
+        this.redisson = redisson;
     }
 
     @Override
