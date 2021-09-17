@@ -2,10 +2,7 @@ package com.lemon.maiko;
 
 import com.lemon.maiko.client.impl.FoaasClientImpl;
 import com.lemon.maiko.client.impl.JerseyRestClientImpl;
-import com.lemon.maiko.core.services.impl.ApiRateLimitServiceImpl;
-import com.lemon.maiko.core.services.impl.LocalLockServiceImpl;
-import com.lemon.maiko.core.services.impl.MessageServiceImpl;
-import com.lemon.maiko.core.services.impl.UserAccessLogConcurrenceMapServiceImpl;
+import com.lemon.maiko.core.services.impl.*;
 import com.lemon.maiko.filter.RequestsRateLimiterFilter;
 import com.lemon.maiko.health.HealthCheckImpl;
 import com.lemon.maiko.resources.MessageResource;
@@ -45,7 +42,7 @@ public class MaikoApplication extends Application<MaikoConfiguration> {
         environment.jersey().register(new MessageResource(new MessageServiceImpl(new FoaasClientImpl("some host", new JerseyRestClientImpl("http://foaas.com")))));
         environment.healthChecks().register("template", new HealthCheckImpl());
 
-        environment.servlets().addFilter("RequestsRateLimiterFilter", new RequestsRateLimiterFilter(new ApiRateLimitServiceImpl(new UserAccessLogConcurrenceMapServiceImpl(), 5, new LocalLockServiceImpl())))
+        environment.servlets().addFilter("RequestsRateLimiterFilter", new RequestsRateLimiterFilter(new ApiRateLimitServiceImpl(new UserAccessLogConcurrenceMapServiceImpl(), 5, new RedisLockServiceImpl())))
                 .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
     }
 
