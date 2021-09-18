@@ -51,9 +51,12 @@ public class ApiRateLimitServiceImpl implements ApiRateLimitService {
 
     }
 
-    @Override
-    public Integer getRequestQuantity(String userApiId) {
+    protected Integer getRequestQuantity(String userApiId) {
         return this.accessLogService.getUserAccessLog(userApiId).getCurrentQuantity();
+    }
+
+    protected OffsetDateTime getFirstAccess(String userApiId) {
+        return this.accessLogService.getUserAccessLog(userApiId).getFirstAccess();
     }
 
 

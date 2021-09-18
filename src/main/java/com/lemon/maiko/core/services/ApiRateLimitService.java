@@ -4,5 +4,4 @@ public interface ApiRateLimitService {
 
     boolean userHaveReachedRateLimit(String userApi);
 
-    Integer getRequestQuantity(String userApiId);
 }
