@@ -1,29 +1,26 @@
-package com.lemon.maiko.core.services.impl;
+package com.lemon.maiko.filter.service.impl;
 
 import com.google.common.collect.MapMaker;
-import com.lemon.maiko.core.services.LockService;
-import org.redisson.api.RedissonClient;
+import com.lemon.maiko.filter.service.LockService;
 
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class RedisLockServiceImpl implements LockService {
+public class LocalLockServiceImpl implements LockService {
 
     private final Map<String, Lock> lockByUserApiId;
-    private final RedissonClient redisson;
 
-    public RedisLockServiceImpl(RedissonClient redisson) {
+    public LocalLockServiceImpl() {
         lockByUserApiId = new MapMaker()
                 .concurrencyLevel(10)
                 .weakKeys()
                 .makeMap();
-
-        this.redisson = redisson;
     }
 
     @Override
     public void lock(String userApiId) {
-        lockByUserApiId.computeIfAbsent(userApiId, key -> redisson.getLock(userApiId)).lock();
+        lockByUserApiId.computeIfAbsent(userApiId, key -> new ReentrantLock()).lock();
     }
 
     @Override

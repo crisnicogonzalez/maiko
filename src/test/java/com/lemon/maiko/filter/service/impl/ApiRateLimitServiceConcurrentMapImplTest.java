@@ -1,6 +1,6 @@
-package com.lemon.maiko.core.services.impl;
+package com.lemon.maiko.filter.service.impl;
 
-import com.lemon.maiko.core.services.ApiRateLimitService;
+import com.lemon.maiko.filter.service.RateLimitService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ApiRateLimitServiceConcurrentMapImplTest {
 
-    private ApiRateLimitService apiRateLimitService;
+    private RateLimitService apiRateLimitService;
     private static final int QUANTITY_REQUEST_LIMIT = 5;
 
 

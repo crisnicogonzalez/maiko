@@ -1,15 +1,15 @@
-package com.lemon.maiko.core.services.impl;
+package com.lemon.maiko.filter.service.impl;
 
 import com.lemon.maiko.core.model.AccessLog;
-import com.lemon.maiko.core.services.ApiRateLimitService;
-import com.lemon.maiko.core.services.LockService;
-import com.lemon.maiko.core.services.UserAccessLogService;
+import com.lemon.maiko.filter.service.RateLimitService;
+import com.lemon.maiko.filter.service.LockService;
+import com.lemon.maiko.filter.service.UserAccessLogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.OffsetDateTime;
 
-public class ApiRateLimitServiceImpl implements ApiRateLimitService {
+public class ApiRateLimitServiceImpl implements RateLimitService {
 
 
     private static final Integer TIME_LIMIT_IN_SECONDS = 10;

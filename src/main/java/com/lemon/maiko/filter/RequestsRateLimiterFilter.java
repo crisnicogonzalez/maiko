@@ -1,6 +1,6 @@
 package com.lemon.maiko.filter;
 
-import com.lemon.maiko.core.services.ApiRateLimitService;
+import com.lemon.maiko.filter.service.RateLimitService;
 import org.eclipse.jetty.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +16,11 @@ import java.io.IOException;
 public class RequestsRateLimiterFilter implements javax.servlet.Filter {
 
     private static final String USER_API_ID_HEADER = "User-Api-Id";
-    private final ApiRateLimitService apiRateLimitService;
+    private final RateLimitService apiRateLimitService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RequestsRateLimiterFilter.class);
 
-    public RequestsRateLimiterFilter(ApiRateLimitService apiRateLimitService) {
+    public RequestsRateLimiterFilter(RateLimitService apiRateLimitService) {
         this.apiRateLimitService = apiRateLimitService;
     }
 

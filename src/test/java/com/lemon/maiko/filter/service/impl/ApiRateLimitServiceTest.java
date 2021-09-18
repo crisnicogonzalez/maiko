@@ -1,8 +1,9 @@
-package com.lemon.maiko.core.services.impl;
+package com.lemon.maiko.filter.service.impl;
 
 import com.lemon.maiko.core.model.AccessLog;
-import com.lemon.maiko.core.services.ApiRateLimitService;
-import com.lemon.maiko.core.services.UserAccessLogService;
+import com.lemon.maiko.filter.service.RateLimitService;
+import com.lemon.maiko.filter.service.UserAccessLogService;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +21,7 @@ public class ApiRateLimitServiceTest {
     private static final String USER_API_ID = "someUserApiId";
     @Mock
     private UserAccessLogService userAccessLogService;
-    private ApiRateLimitService apiRateLimitService;
+    private RateLimitService apiRateLimitService;
 
 
     @Before

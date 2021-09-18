@@ -2,10 +2,10 @@ package com.lemon.maiko;
 
 import com.lemon.maiko.client.impl.FoaasClientImpl;
 import com.lemon.maiko.client.impl.JerseyRestClientImpl;
-import com.lemon.maiko.core.services.impl.ApiRateLimitServiceImpl;
+import com.lemon.maiko.filter.service.impl.ApiRateLimitServiceImpl;
 import com.lemon.maiko.core.services.impl.MessageServiceImpl;
-import com.lemon.maiko.core.services.impl.RedisLockServiceImpl;
-import com.lemon.maiko.core.services.impl.UserAccessLogRedisServiceImpl;
+import com.lemon.maiko.filter.service.impl.RedisLockServiceImpl;
+import com.lemon.maiko.filter.service.impl.UserAccessLogRedisServiceImpl;
 import com.lemon.maiko.filter.RequestsRateLimiterFilter;
 import com.lemon.maiko.health.HealthCheckImpl;
 import com.lemon.maiko.resources.MessageResource;

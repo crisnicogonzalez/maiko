@@ -1,4 +1,4 @@
-package com.lemon.maiko.core.services;
+package com.lemon.maiko.filter.service;
 
 public interface LockService {
 
